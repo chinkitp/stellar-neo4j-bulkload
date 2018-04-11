@@ -2,8 +2,8 @@ version: '3.3'
 services:
   db:
     build:
-      context: ./src
-    image: chinkit/stellar-neo4j-bulkload:latest
+      context: ./db
+    image: chinkit/stellar-neo4j:latest
     ports:
       - "9494:7474"
       - "9495:7687"
@@ -12,3 +12,10 @@ services:
     environment:
       - NEO4J_AUTH=none
       - apoc.import.file.enabled=true
+
+  load-client:
+    build:
+      context: ./load-client
+    image: chinkit/stellar-neo4j-client:latest
+    depends_on:
+      - "db"
