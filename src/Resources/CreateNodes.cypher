@@ -1,10 +1,32 @@
-WITH 'https://raw.githubusercontent.com/data61/stellar-storage-eval/master/neo4j/src/main/resources/step1/nodes.json/label%3Danswer/part-00000-24cee670-6299-4516-b956-5fb2fc6e3e07.c000.json' AS url
-
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/src/Resources/all-answers.json' AS url
 CALL apoc.load.json(url) YIELD value as answer
+WITH answer.graphs as g, answer
+ CREATE(p:answer:g) SET 
+                    p.id = answer.id, 
+                    p.graphs = answer.graphs,
+                    p.created = answer.props.created, 
+                    p.description = answer.props.description, 
+                    p.vote = answer.props.vote 
+;
 
-MERGE (p:answer {id:answer.id})
-   ON CREATE SET p.id = answer.id, p.noOfProps = answer.props.Description
-   
-   
-   
-   
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/src/Resources/all-questions.json' AS url
+CALL apoc.load.json(url) YIELD value as question
+MERGE (p:question {id:question.id})
+   ON CREATE SET    p.id = question.id, 
+                    p.graphs = question.graphs,
+                    p.created = question.props.created, 
+                    p.question = question.props.question, 
+                    p.description = question.props.description, 
+                    p.vote = question.props.vote 
+;
+
+
+CALL apoc.load.json(url) YIELD value as user
+MERGE (p:user {id:user.id})
+   ON CREATE SET    p.id = user.id, 
+                    p.graphs = user.graphs,
+                    p.created = question.props.created, 
+                    p.question = question.props.question, 
+                    p.description = question.props.description, 
+                    p.vote = question.props.vote 
+;
