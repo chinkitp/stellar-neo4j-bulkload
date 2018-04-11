@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  db:
+    build:
+      context: ./src
+    image: chinkit/stellar-neo4j-bulkload:latest
+    ports:
+      - "9494:7474"
+      - "9495:7687"
+    volumes:
+      - $HOME/neo4j/data:/data \   
+    environment:
+      - NEO4J_AUTH=none
+      - apoc.import.file.enabled=true
