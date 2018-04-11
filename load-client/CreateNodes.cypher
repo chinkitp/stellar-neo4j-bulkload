@@ -1,4 +1,6 @@
-WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/src/Resources/all-answers.json' AS url
+
+//============ Loading Nodes : answer =====================
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/Resources/nodes/all-answers.json' AS url
 CALL apoc.load.json(url) YIELD value as answer
  CREATE(p:answer:Lr41MAakQRqPwVuj3j4jCg) SET 
                     p.id = answer.id, 
@@ -7,7 +9,18 @@ CALL apoc.load.json(url) YIELD value as answer
                     p.vote = answer.props.vote 
 ;
 
-WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/src/Resources/all-questions.json' AS url
+//============ Loading Nodes : comment =====================
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/Resources/nodes/all-comments.json' AS url
+CALL apoc.load.json(url) YIELD value as comment
+ CREATE(p:comment:Lr41MAakQRqPwVuj3j4jCg) SET 
+                    p.id = comment.id, 
+                    p.created = comment.props.created, 
+                    p.description = comment.props.description, 
+                    p.vote = comment.props.vote 
+;
+
+//============ Loading Nodes : Question =====================
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/Resources/nodes/all-questions.json' AS url
 CALL apoc.load.json(url) YIELD value as question
  CREATE(p:question:Lr41MAakQRqPwVuj3j4jCg) SET    
                     p.id = question.id, 
@@ -17,7 +30,8 @@ CALL apoc.load.json(url) YIELD value as question
                     p.vote = question.props.vote 
 ;
 
-WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/src/Resources/all-users.json' AS url
+//============ Loading Nodes : User =====================
+WITH 'https://raw.githubusercontent.com/chinkitp/stellar-neo4j-bulkload/master/Resources/nodes/all-users.json' AS url
 CALL apoc.load.json(url) YIELD value as user
  CREATE (p:user:Lr41MAakQRqPwVuj3j4jCg)  SET
                     p.id = user.id, 
@@ -27,5 +41,10 @@ CALL apoc.load.json(url) YIELD value as user
                     p.firstName = user.props.firstName, 
                     p.gender = user.props.gender, 
                     p.lastName = user.props.lastName, 
-                    p.passport.number = user.props.passport.number
+                    p.passportNumber = user.props.passport.number
 ;
+
+CREATE INDEX ON :answer(id);
+CREATE INDEX ON :user(id);
+CREATE INDEX ON :question(id);
+CREATE INDEX ON :comment(id);
