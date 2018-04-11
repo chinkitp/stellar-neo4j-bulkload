@@ -23,7 +23,7 @@ CALL apoc.load.json(url) YIELD value as made
  MATCH (a),(b) 
  WHERE a.id = made.src AND b.id = made.dst 
  CREATE (a)-[r:made]->(b) SET 
-                    r.id = gave.id
+                    r.id = made.id
 ;
 
 //============ Loading Edges : on =====================
@@ -41,5 +41,5 @@ CALL apoc.load.json(url) YIELD value as to
  MATCH (a),(b) 
  WHERE a.id = to.src AND b.id = to.dst 
  CREATE (a)-[r:to]->(b) SET 
-                    r.id = on.id
+                    r.id = to.id
 ;
