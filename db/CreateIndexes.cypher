@@ -1,0 +1,1 @@
+CREATE INDEX ON :Lr41MAakQRqPwVuj3j4jCg(id);
