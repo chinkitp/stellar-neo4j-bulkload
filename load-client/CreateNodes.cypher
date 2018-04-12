@@ -44,7 +44,4 @@ CALL apoc.load.json(url) YIELD value as user
                     p.passportNumber = user.props.passport.number
 ;
 
-CREATE INDEX ON :answer(id);
-CREATE INDEX ON :user(id);
-CREATE INDEX ON :question(id);
-CREATE INDEX ON :comment(id);
+CREATE INDEX ON :Lr41MAakQRqPwVuj3j4jCg(id);
