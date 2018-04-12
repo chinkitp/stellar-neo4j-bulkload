@@ -29,17 +29,16 @@ cat ./Resources/edges/all-made.json | jq -r '. | [.src, .id, .dst] | @csv ' > al
 cat ./Resources/edges/all-on.json | jq -r '. | [.src, .id, .dst] | @csv ' > all-on.csv
 cat ./Resources/edges/all-to.json | jq -r '. | [.src, .id, .dst] | @csv ' > all-to.csv
 
-
- neo4j-admin import \
-     --nodes:answers:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/answers-header.csv,all-answers.csv" \
-     --nodes:comments:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/comments-header.csv,all-comments.csv" \
-     --nodes:questions:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/questions-header.csv,all-questions.csv" \
-     --nodes:users:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/users-header.csv,all-users.csv" \
-     --relationships:asked="./Resources/headers/relationship-header.csv,all-asked.csv" \
-     --relationships:gave="./Resources/headers/relationship-header.csv,all-gave.csv" \
-     --relationships:made="./Resources/headers/relationship-header.csv,all-made.csv" \
-     --relationships:on="./Resources/headers/relationship-header.csv,all-on.csv" \
-     --relationships:to="./Resources/headers/relationship-header.csv,all-to.csv" 
+neo4j-admin import \
+    --nodes:answers:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/answers-header.csv,all-answers.csv" \
+    --nodes:comments:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/comments-header.csv,all-comments.csv" \
+    --nodes:questions:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/questions-header.csv,all-questions.csv" \
+    --nodes:users:Lr41MAakQRqPwVuj3j4jCg="./Resources/headers/users-header.csv,all-users.csv" \
+    --relationships:asked="./Resources/headers/relationship-header.csv,all-asked.csv" \
+    --relationships:gave="./Resources/headers/relationship-header.csv,all-gave.csv" \
+    --relationships:made="./Resources/headers/relationship-header.csv,all-made.csv" \
+    --relationships:on="./Resources/headers/relationship-header.csv,all-on.csv" \
+    --relationships:to="./Resources/headers/relationship-header.csv,all-to.csv" 
     
 duration=$(( SECONDS - start ))
 echo 'Completed loading EPGM data in ' ${duration} 'seconds'
