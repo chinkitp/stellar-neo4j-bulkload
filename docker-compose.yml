@@ -5,17 +5,19 @@ services:
       context: ./db
     image: chinkit/stellar-neo4j:latest
     ports:
-      - "9494:7474"
-      - "9495:7687"
+      - "7474:7474"
+      - "7687:7687"
     volumes:
       - $HOME/neo4j/data:/data \   
     environment:
       - NEO4J_AUTH=none
       - apoc.import.file.enabled=true
+  #   - dbms.active_database=epgmdata.db
+      - EXTENSION_SCRIPT=./stellar-search-neo4j/setup.sh
 
-  load-client:
-    build:
-      context: ./load-client
-    image: chinkit/stellar-neo4j-client:latest
-    depends_on:
-      - "db"
+  # load-client:
+  #   build:
+  #     context: ./load-client
+  #   image: chinkit/stellar-neo4j-client:latest
+  #   depends_on:
+  #     - "db"
